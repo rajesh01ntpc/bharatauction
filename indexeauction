@@ -5,37 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Auction Finder</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        /* Your CSS styles here */
     </style>
 </head>
 <body>
@@ -43,12 +13,55 @@
         <h1>Property Auction Finder</h1>
         <p>Welcome to Property Auction Finder! Here you can find property auctions from various sources:</p>
         <h2>Property Auction Sources:</h2>
-        <ul>
-            <li><a href="link_to_bank_auctions_website" target="_blank">Bank Auctions</a></li>
-            <li><a href="https://ibapi.in" target="_blank">Bank e-Auctions</a></li>
-            <li><a href="link_to_other_auctions_website" target="_blank">Other Auctions</a></li>
+        <ul id="auctionLinks">
+            <li><a href="#" onclick="openAuction('bank')">Bank Auctions</a></li>
+            <li><a href="#" onclick="openAuction('ibapi')">IBAPI Auctions</a></li>
+            <li><a href="#" onclick="openAuction('other')">Other Auctions</a></li>
         </ul>
-        <p>Feel free to explore these links to find property auctions that match your criteria.</p>
+        <p id="statusMessage"></p>
     </div>
+
+    <script>
+        function openAuction(type) {
+            var url;
+            switch(type) {
+                case 'bank':
+                    url = "link_to_bank_auctions_website";
+                    break;
+                case 'ibapi':
+                    url = "link_to_ibapi_auctions_website";
+                    break;
+                case 'other':
+                    url = "link_to_other_auctions_website";
+                    break;
+                default:
+                    url = "#";
+            }
+            document.getElementById("statusMessage").innerHTML = "Redirecting to " + type + " auctions...";
+            setTimeout(function() {
+                window.open(url, '_blank');
+                document.getElementById("statusMessage").innerHTML = "";
+            }, 1000);
+        }
+    </script>
+
+    <?php
+    // Database connection
+    $serverName = "your_server_name";
+    $connectionOptions = array(
+        "Database" => "your_database_name",
+        "Uid" => "your_username",
+        "PWD" => "your_password"
+    );
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+    if ($conn === false) {
+        echo "Could not connect.\n";
+        die(print_r(sqlsrv_errors(), true));
+    } else {
+        echo "Connected successfully";
+        // Perform database operations here
+    }
+    ?>
 </body>
 </html>
